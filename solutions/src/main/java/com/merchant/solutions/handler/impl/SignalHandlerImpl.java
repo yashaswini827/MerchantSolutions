@@ -1,4 +1,4 @@
-package com.merchant.solutions.services.impl;
+package com.merchant.solutions.handler.impl;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,42 +11,41 @@ import com.merchant.solutions.algo.Algo;
 import com.merchant.solutions.dto.Action;
 import com.merchant.solutions.dto.Param;
 import com.merchant.solutions.dto.Signal;
+import com.merchant.solutions.handler.SignalHandler;
 import com.merchant.solutions.repo.SignalRepository;
-import com.merchant.solutions.services.SignalHandler;
 
 @Service
 public class SignalHandlerImpl implements SignalHandler {
-	
+
 	@Autowired
 	SignalRepository signalConfigRepository;
+	
+	@Autowired
+	Algo algo;
 
 	public void handleSignal(int signal) {
 		try {
-			List<Signal> config = loadSignalConfiguration();
-			Signal signalConfig = findSignalConfig(config, signal);
+			List<Signal> signalList = loadSignalConfiguration();
+			Signal signalConfig = findSignalConfig(signalList, signal);
 
 			if (signalConfig != null) {
-				Algo algo = new Algo();
 				executeActions(algo, signalConfig.getActions());
-				algo.doAlgo();
 			} else {
-				Algo algo = new Algo();
 				algo.cancelTrades();
-				algo.doAlgo();
 			}
+			algo.doAlgo();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-    
+
 	@Cacheable("singnalConfigCache")
 	private List<Signal> loadSignalConfiguration() throws IOException {
 		return signalConfigRepository.findAll();
 	}
 
-	private Signal findSignalConfig(List<Signal> config, int signalNumber) {
-		return config.stream().filter(signal -> signal.getSignalNumber() == signalNumber).findFirst()
-				.orElse(null);
+	private Signal findSignalConfig(List<Signal> signalList, int signalNumber) {
+		return signalList.stream().filter(signal -> signal.getSignalNumber() == signalNumber).findFirst().orElse(null);
 	}
 
 	private void executeActions(Algo algo, List<Action> actions) {

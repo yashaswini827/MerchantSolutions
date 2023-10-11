@@ -1,4 +1,4 @@
-package com.merchant.solutions.services;
+package com.merchant.solutions.handler;
 
 public interface SignalHandler {
 	
