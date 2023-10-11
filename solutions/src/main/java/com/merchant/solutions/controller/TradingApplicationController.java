@@ -15,7 +15,7 @@ import com.merchant.solutions.repo.SignalRepository;
 
 @RestController
 @RequestMapping("/signals")
-public class SignalController {
+public class TradingApplicationController {
 	@Autowired
 	SignalHandler signalHandler;
 

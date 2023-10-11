@@ -11,18 +11,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.merchant.solutions.controller.SignalController;
+import com.merchant.solutions.controller.TradingApplicationController;
 import com.merchant.solutions.handler.SignalHandler;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SolutionsApplicationTests {
+class TradingApplicationTests {
 
 	@Mock
 	private SignalHandler signalHandler;
 
 	@InjectMocks
-	private SignalController signalController;
+	private TradingApplicationController signalController;
 
 	@Autowired
 	private MockMvc mockMvc;
