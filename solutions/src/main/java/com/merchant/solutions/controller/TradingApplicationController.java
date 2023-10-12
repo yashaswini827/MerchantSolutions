@@ -30,8 +30,8 @@ public class TradingApplicationController {
 	}
 
 	@PostMapping("/create")
-	public Signal createSignalConfig(@RequestBody Signal signal) {
-		return signalConfigRepository.save(signal);
+	public ResponseEntity<Signal> createSignalConfig(@RequestBody Signal signal) {
+		return ResponseEntity.ok(signalConfigRepository.save(signal));
 	}
 
 }

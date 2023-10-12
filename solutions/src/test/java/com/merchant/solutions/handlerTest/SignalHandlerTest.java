@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.merchant.solutions.algo.Algo;
 import com.merchant.solutions.dto.Action;
@@ -88,7 +87,7 @@ public class SignalHandlerTest {
         Mockito.verify(algo).submitToMarket();
     }
 
-    private void verifyAlgoCancelTradesNotCalled() {
+	private void verifyAlgoCancelTradesNotCalled() {
         Mockito.verify(algo, Mockito.never()).cancelTrades();
     }
 }
